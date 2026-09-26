@@ -16,7 +16,7 @@ services:
       environment:
          - TS_AUTHKEY=${MY_TS_KEY}
          - TS_STATE_DIR=/var/lib/tailscale
-           - TS_USERSPACE=false
+         - TS_USERSPACE=false
       devices:
          - /dev/net/tun:/dev/net/tun
       volumes:
