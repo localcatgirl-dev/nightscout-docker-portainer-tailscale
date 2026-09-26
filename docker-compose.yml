@@ -1,10 +1,10 @@
 # version: "3"
 
-# x-logging: &default-logging
-#    options:
-#       max-size: "10m"
-#       max-file: "5"
-#    driver: json-file
+x-logging: &default-logging
+   options:
+      max-size: "10m"
+      max-file: "5"
+   driver: json-file
 
 services:
    tailscale:
