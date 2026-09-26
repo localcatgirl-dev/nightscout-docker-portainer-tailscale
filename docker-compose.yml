@@ -16,11 +16,13 @@ services:
       environment:
          - TS_AUTHKEY=${MY_TS_KEY}
          - TS_STATE_DIR=/var/lib/tailscale
-         - TS_USERSPACE=false
-      devices:
-         - /dev/net/tun:/dev/net/tun
+         - TS_USERSPACE=true
+         - TS_SERVE_CONFIG=/config/serve.json
+      # devices:
+      #    - /dev/net/tun:/dev/net/tun
       volumes:
          - ./tailscale-state:/var/lib/tailscale
+         - ./tailscale-config:/config
       cap_add:
          - net_admin
          - net_raw
