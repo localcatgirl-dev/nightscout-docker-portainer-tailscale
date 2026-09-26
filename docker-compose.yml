@@ -14,7 +14,7 @@ services:
       environment:
       - TS_AUTHKEY=${MY_TS_KEY}
       - TS_STATE_DIR=/var/lib/tailscale
-      - TS_USERSPACE=false
+      # - TS_USERSPACE=false
       volumes:
       - ./tailscale-state:/var/lib/tailscale
       cap_add:
@@ -25,15 +25,15 @@ services:
 
 
    mongo:
-      image: mongo:latest
+      image: mongo:4.4 # old cpu :(
       restart: always
       volumes:
          - ${NS_MONGO_DATA_DIR:-./mongo-data}:/data/db:cached
       logging: *default-logging
-      network_mode: "service:tailscale" 
+      # network_mode: "service:tailscale" 
 
    nightscout:
-      image: nightscout/cgm-remote-monitor:latest
+      image: nightscout/cgm-remote-monitor:15.0.7 # old cpu :(
       container_name: nightscout
       restart: always
       #ports:
@@ -49,7 +49,7 @@ services:
          TZ: ${MY_TZ}
          INSECURE_USE_HTTP: "true"
          # Listen on all container interfaces so reverse proxies and other containers can reach Nightscout
-         NIGHTSCOUT_HOSTNAME: "0.0.0.0"
+         #NIGHTSCOUT_HOSTNAME: "0.0.0.0"
          MONGO_CONNECTION: mongodb://mongo:27017/nightscout
          API_SECRET: ${MY_API_SECRET}
          # See https://github.com/nightscout/cgm-remote-monitor#plugins for details
