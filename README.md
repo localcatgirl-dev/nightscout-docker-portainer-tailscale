@@ -32,7 +32,7 @@ tailscale serve --bg --http=80 http://127.0.0.1:1337
 sudo tailscale serve status -json > tailscale-config/serve.json
 ```
 
-## How it looks
+### How it looks
 In  my case it generated like this for example
 
 ```json
@@ -53,3 +53,5 @@ In  my case it generated like this for example
   }
 }
 ```
+
+Now you can join through tailscale address but only from the host not from the docker container.
