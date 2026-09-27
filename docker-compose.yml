@@ -30,6 +30,7 @@ services:
          - net_raw
       restart: unless-stopped
       env_file: .env
+      #network_mode: "service:nightscout"
 
    mongo:
       image: mongo:4.4 # old cpu :(
@@ -68,7 +69,7 @@ services:
          TZ: Europe/Prague
          # Plugins:
          ENABLE: devicestatus dbsize iob cob cage sage basal pump openaps
-         # Maybe: careportal boluscalc bwp       
+         # Maybe: careportal boluscalc bwp
          # Alarms
          ALARM_URGENT_HIGH: off
          ALARM_HIGH: off
@@ -80,6 +81,6 @@ services:
          TIMEAGO_ENABLE_ALERTS: false
          SHOW_FORECAST: openaps
          CUSTOM_TITLE: puppy sugar
-         THEME: colors    
+         THEME: colors
          SCALE_Y: linear
          BASAL_RENDER: default
