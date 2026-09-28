@@ -55,3 +55,5 @@ In  my case it generated like this for example
 ```
 
 Now you can join through tailscale address but only from the host not from the docker container.
+
+Note: When android phone cannot connect you should try to turn off cloudflare DNS in your browser.
