@@ -6,6 +6,7 @@ x-logging: &default-logging
 
 # https://hub.docker.com/r/tailscale/tailscale
 # https://tailscale.com/kb/1282/docker
+# https://af3556.github.io/Compute/Vaultwarden-%E2%9D%A4%EF%B8%8F-Tailscale#2-create-a-container-manager-project-with-tailscale-node
 services:
    tailscale:
       image: tailscale/tailscale:latest
@@ -19,7 +20,7 @@ services:
          - TS_USERSPACE=true
          - TS_SERVE_CONFIG=/config/serve.json
       # devices:
-      #    - /dev/net/tun:/dev/net/tun
+      #    - /dev/net/tun:/dev/net/tun # old cpu :(
       volumes:
          - ./tailscale-state:/var/lib/tailscale
          - ./tailscale-config:/config

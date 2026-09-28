@@ -1,6 +1,6 @@
 # Nightscout through Docker and Tailscale
 
-Only tested on my very old Linux laptop with pentium. So I had to use mongo:4.4 and cgm-remote-monitor:15.0.7 bcs it newer versions doesn't support older Mongo than 5.0+. 
+Only tested on my very old Linux laptop with pentium. My Intel Pentium CPU doesn't support AVX so I had to use mongo:4.4. Than I have to use cgm-remote-monitor:15.0.7 bcs newer versions doesn't support older Mongo than 5.0+. 
 
 ## Install
 
