@@ -1,6 +1,6 @@
 # Nightscout through Docker and Tailscale
 
-(Only tested on Linux)
+Only tested on my very old Linux laptop with pentium. So I had to use mongo:4.4 and cgm-remote-monitor:15.0.7 bcs it newer versions doesn't support older Mongo than 5.0+. 
 
 ## Install
 
@@ -32,7 +32,7 @@ tailscale serve --bg --http=80 http://127.0.0.1:1337
 sudo tailscale serve status -json > tailscale-config/serve.json
 ```
 
-### How it looks
+### How serve,json will looks like
 In  my case it generated like this for example
 
 ```json
