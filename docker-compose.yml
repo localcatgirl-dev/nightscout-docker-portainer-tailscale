@@ -7,29 +7,29 @@ x-logging: &default-logging
 # https://hub.docker.com/r/tailscale/tailscale
 # https://tailscale.com/kb/1282/docker
 # https://af3556.github.io/Compute/Vaultwarden-%E2%9D%A4%EF%B8%8F-Tailscale#2-create-a-container-manager-project-with-tailscale-node
-services:
-   tailscale:
-      image: tailscale/tailscale:latest
-      container_name: tailscale
-      hostname: nightscout-ts
-      ports:
-         - 1337:1337
-      environment:
-         - TS_AUTHKEY=${MY_TS_KEY}
-         - TS_STATE_DIR=/var/lib/tailscale
-         - TS_USERSPACE=true
-         - TS_SERVE_CONFIG=/config/serve.json
-      # devices:
-      #    - /dev/net/tun:/dev/net/tun # old cpu :(
-      volumes:
-         - ./tailscale-state:/var/lib/tailscale
-         - ./tailscale-config:/config
-      cap_add:
-         - net_admin
-         - net_raw
-      restart: unless-stopped
-      env_file: .env
-      #network_mode: "service:nightscout"
+# services:
+#    tailscale:
+#       image: tailscale/tailscale:latest
+#       container_name: tailscale
+#       hostname: nightscout-ts
+#       ports:
+#          - 1337:1337
+#       environment:
+#          - TS_AUTHKEY=${MY_TS_KEY}
+#          - TS_STATE_DIR=/var/lib/tailscale
+#          - TS_USERSPACE=true
+#          - TS_SERVE_CONFIG=/config/serve.json
+#       # devices:
+#       #    - /dev/net/tun:/dev/net/tun # old cpu :(
+#       volumes:
+#          - ./tailscale-state:/var/lib/tailscale
+#          - ./tailscale-config:/config
+#       cap_add:
+#          - net_admin
+#          - net_raw
+#       restart: unless-stopped
+#       env_file: .env
+#       #network_mode: "service:nightscout"
 
    mongo:
       image: mongo:4.4 # old cpu :(
@@ -42,13 +42,13 @@ services:
       image: nightscout/cgm-remote-monitor:15.0.7 # old cpu :(
       container_name: nightscout
       restart: always
-      #ports:
-      #- "1337:1337"
+      ports:
+      - "1337:1337"
       depends_on:
          - mongo
          - tailscale
       logging: *default-logging
-      network_mode: "service:tailscale"
+      #network_mode: "service:tailscale"
       environment:
          ### Variables for the container
          NODE_ENV: production
