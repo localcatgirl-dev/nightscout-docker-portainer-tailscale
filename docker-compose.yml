@@ -4,38 +4,38 @@ x-logging: &default-logging
       max-file: "5"
    driver: json-file
 
-# https://hub.docker.com/r/tailscale/tailscale
-# https://tailscale.com/kb/1282/docker
-# https://af3556.github.io/Compute/Vaultwarden-%E2%9D%A4%EF%B8%8F-Tailscale#2-create-a-container-manager-project-with-tailscale-node
-# services:
-#    tailscale:
-#       image: tailscale/tailscale:latest
-#       container_name: tailscale
-#       hostname: nightscout-ts
-#       ports:
-#          - 1337:1337
-#       environment:
-#          - TS_AUTHKEY=${MY_TS_KEY}
-#          - TS_STATE_DIR=/var/lib/tailscale
-#          - TS_USERSPACE=true
-#          - TS_SERVE_CONFIG=/config/serve.json
-#       # devices:
-#       #    - /dev/net/tun:/dev/net/tun # old cpu :(
-#       volumes:
-#          - ./tailscale-state:/var/lib/tailscale
-#          - ./tailscale-config:/config
-#       cap_add:
-#          - net_admin
-#          - net_raw
-#       restart: unless-stopped
-#       env_file: .env
-#       #network_mode: "service:nightscout"
+services:
+   # https://hub.docker.com/r/tailscale/tailscale
+   # https://tailscale.com/kb/1282/docker
+   # https://af3556.github.io/Compute/Vaultwarden-%E2%9D%A4%EF%B8%8F-Tailscale#2-create-a-container-manager-project-with-tailscale-node
+   #    tailscale:
+   #       image: tailscale/tailscale:latest
+   #       container_name: tailscale
+   #       hostname: nightscout-ts
+   #       ports:
+   #          - 1337:1337
+   #       environment:
+   #          - TS_AUTHKEY=${MY_TS_KEY}
+   #          - TS_STATE_DIR=/var/lib/tailscale
+   #          - TS_USERSPACE=true
+   #          - TS_SERVE_CONFIG=/config/serve.json
+   #       # devices:
+   #       #    - /dev/net/tun:/dev/net/tun # old cpu :(
+   #       volumes:
+   #          - ./tailscale-state:/var/lib/tailscale
+   #          - ./tailscale-config:/config
+   #       cap_add:
+   #          - net_admin
+   #          - net_raw
+   #       restart: unless-stopped
+   #       env_file: .env
+   #       #network_mode: "service:nightscout"
 
    mongo:
       image: mongo:4.4 # old cpu :(
       restart: always
       volumes:
-         - ${NS_MONGO_DATA_DIR:-./mongo-data}:/data/db:cached
+         - ./mongo-data:/data/db
       logging: *default-logging
 
    nightscout:
@@ -43,18 +43,15 @@ x-logging: &default-logging
       container_name: nightscout
       restart: always
       ports:
-      - "1337:1337"
+         - "1337:1337"
       depends_on:
          - mongo
-         - tailscale
+      #   - tailscale
       logging: *default-logging
       #network_mode: "service:tailscale"
       environment:
-         ### Variables for the container
          NODE_ENV: production
          INSECURE_USE_HTTP: "true"
-         # Listen on all container interfaces so reverse proxies and other containers can reach Nightscout
-         #NIGHTSCOUT_HOSTNAME: "0.0.0.0"
          MONGO_CONNECTION: mongodb://mongo:27017/nightscout
          API_SECRET: ${MY_API_SECRET}
          # AUTH_DEFAULT_ROLES (readable) - possible values readable, denied, or any valid role name.
